@@ -5,3 +5,7 @@ Cam and Josh GameJam collaboration
 Added UI Elements
 *Updated Pause Screen to be darker
 *Updated Score box to larger text
+
+Added Audio Elements
+*music
+*sfxs
