@@ -10,7 +10,7 @@ Added Audio Elements
 *music
 *sfxs
 
-Adeed Scripts
+Added Scripts
 *Enemy
 *Player
 *Web Request (Class and Scrape)
