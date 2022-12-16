@@ -9,3 +9,8 @@ Added UI Elements
 Added Audio Elements
 *music
 *sfxs
+
+Adeed Scripts
+*Enemy
+*Player
+*Web Request (Class and Scrape)
