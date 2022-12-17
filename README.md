@@ -18,6 +18,7 @@ Added Scripts
 12/17/22
 
 Added UI Elements
+*Added requested but not documented ADS overlay
 *Updated Settings Screen
 *Updated Upadted Pause Screen Main Menu Button
 
