@@ -13,6 +13,20 @@ public class WikiScrape : MonoBehaviour
 
     public string url;
     public List<string> hyperLinks = new List<string>();
+    // List of links to exclude from shootable targets
+    public List<string> Links_to_Exclude = new List<string>();
+    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Main_Page");
+    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Wikipedia:Contents");
+    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Portal:Current_events");
+    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Wikipedia:About");
+    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Wikipedia:Contact_us");
+    Links_to_Exculde.Add("https://donate.wikimedia.org/w/index.php?title=Special%3ALandingPage&country=US&uselang=en");
+    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Help:Contents");
+    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Special:SpecialPages");
+    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Help:Introduction");
+    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Wikipedia:Community_portal");
+    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Special:RecentChanges?hidebots=1&hidecategorization=1&hideWikibase=1&limit=50&days=7&urlversion=2");
+    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Wikipedia:File_Upload_Wizard");
     
     //[SerializeField] Image image;
     //public List<Image> thumbnails = new List<Image>();
@@ -54,10 +68,11 @@ public class WikiScrape : MonoBehaviour
                linkToFind = "<a href=\"/wiki/";
                htmlCode = htmlCode.Substring(htmlCode.IndexOf(linkToFind) + linkToFind.Length);
                string link = "https://en.wikipedia.org/wiki/" + htmlCode.Substring(0, htmlCode.IndexOf("\""));
+               Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Special:WhatLinksHere/" + htmlCode.Substring(0, htmlCode.IndexOf("\"")));
 
                hyperLinks.Add(link);
-
-           }
+               // Good_Links now contains the page links excluding the ones from Links_to_Exclude
+               List<string> Good_Links = hyperLinks.Except(Links_to_Exclude).ToList();
        });
     }
 
@@ -65,10 +80,10 @@ public class WikiScrape : MonoBehaviour
     {  
         for (int listNum = 0 ; string.IsNullOrEmpty(citizen.link); listNum++)
         {
-            if (hyperLinks[listNum] != null)
+            if (Good_Links[listNum] != null)
             {
-                citizen.link = hyperLinks[listNum];
-                hyperLinks.RemoveAt(listNum);
+                citizen.link = Good_Links[listNum];
+                Good_Links.RemoveAt(listNum);
                 return;
             }
         }
@@ -81,7 +96,7 @@ public class WikiScrape : MonoBehaviour
         {
             citizen.GetComponent<Enemy>().link = null;
         }
-        hyperLinks.Clear();
+        Good_Links.Clear();
     }
     /*
     private void ImageScrape(string HTML)
