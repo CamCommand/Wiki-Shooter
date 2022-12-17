@@ -25,3 +25,7 @@ Added UI Elements
 Added Code change to WikiScrape script
 *excluded some less cool links
 *sent code options in discord
+
+Added Audio
+*added the rest of the audio elements
+*did not change any existing ones
