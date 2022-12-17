@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 
 public class WikiScrape : MonoBehaviour
@@ -15,24 +16,26 @@ public class WikiScrape : MonoBehaviour
     public List<string> hyperLinks = new List<string>();
     // List of links to exclude from shootable targets
     public List<string> Links_to_Exclude = new List<string>();
-    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Main_Page");
-    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Wikipedia:Contents");
-    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Portal:Current_events");
-    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Wikipedia:About");
-    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Wikipedia:Contact_us");
-    Links_to_Exculde.Add("https://donate.wikimedia.org/w/index.php?title=Special%3ALandingPage&country=US&uselang=en");
-    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Help:Contents");
-    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Special:SpecialPages");
-    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Help:Introduction");
-    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Wikipedia:Community_portal");
-    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Special:RecentChanges?hidebots=1&hidecategorization=1&hideWikibase=1&limit=50&days=7&urlversion=2");
-    Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Wikipedia:File_Upload_Wizard");
-    
+    List<string> Good_Links = new List<string>();
+
     //[SerializeField] Image image;
     //public List<Image> thumbnails = new List<Image>();
 
     private void Awake()
     {
+        Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Main_Page");
+        Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Wikipedia:Contents");
+        Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Portal:Current_events");
+        Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Wikipedia:About");
+        Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Wikipedia:Contact_us");
+        Links_to_Exclude.Add("https://donate.wikimedia.org/w/index.php?title=Special%3ALandingPage&country=US&uselang=en");
+        Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Help:Contents");
+        Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Special:SpecialPages");
+        Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Help:Introduction");
+        Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Wikipedia:Community_portal");
+        Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Special:RecentChanges?hidebots=1&hidecategorization=1&hideWikibase=1&limit=50&days=7&urlversion=2");
+        Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Wikipedia:File_Upload_Wizard");
+
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
@@ -44,7 +47,6 @@ public class WikiScrape : MonoBehaviour
         LinkScrape(url);
         //ImageScrape(url);
     }
-
     public void LinkScrape(string HTML)
     {
         string linkToFind;
@@ -68,17 +70,19 @@ public class WikiScrape : MonoBehaviour
                linkToFind = "<a href=\"/wiki/";
                htmlCode = htmlCode.Substring(htmlCode.IndexOf(linkToFind) + linkToFind.Length);
                string link = "https://en.wikipedia.org/wiki/" + htmlCode.Substring(0, htmlCode.IndexOf("\""));
-               Links_to_Exculde.Add("https://en.wikipedia.org/wiki/Special:WhatLinksHere/" + htmlCode.Substring(0, htmlCode.IndexOf("\"")));
+               Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Special:WhatLinksHere/" + htmlCode.Substring(0, htmlCode.IndexOf("\"")));
 
                hyperLinks.Add(link);
                // Good_Links now contains the page links excluding the ones from Links_to_Exclude
-               List<string> Good_Links = hyperLinks.Except(Links_to_Exclude).ToList();
+               Good_Links = hyperLinks.Except(Links_to_Exclude).ToList();
+
+           }
        });
     }
 
     public void addLinkToCitizen(Enemy citizen)
-    {  
-        for (int listNum = 0 ; string.IsNullOrEmpty(citizen.link); listNum++)
+    {
+        for (int listNum = 0; string.IsNullOrEmpty(citizen.link); listNum++)
         {
             if (Good_Links[listNum] != null)
             {
@@ -140,4 +144,5 @@ public class WikiScrape : MonoBehaviour
     }
     */
 }
+
 
