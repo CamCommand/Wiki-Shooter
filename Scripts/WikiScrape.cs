@@ -29,7 +29,9 @@ public class WikiScrape : MonoBehaviour
         Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Wikipedia:About");
         Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Wikipedia:Contact_us");
         Links_to_Exclude.Add("https://donate.wikimedia.org/w/index.php?title=Special%3ALandingPage&country=US&uselang=en");
+        Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Help:Link");
         Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Help:Contents");
+        Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Help:Category");
         Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Special:SpecialPages");
         Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Help:Introduction");
         Links_to_Exclude.Add("https://en.wikipedia.org/wiki/Wikipedia:Community_portal");
